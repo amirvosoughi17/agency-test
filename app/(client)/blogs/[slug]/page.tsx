@@ -11,6 +11,12 @@ interface Params {
     slug: string;
   };
 }
+interface SanityImage {
+  asset: {
+    _ref: string;
+  };
+}
+
 export const revalidate = 60;
 
 async function getBlog(slug: string) {
@@ -30,7 +36,7 @@ async function getBlog(slug: string) {
 
 const SingleBlogPage = async ({ params }: Params) => {
   const blog: BlogType = await getBlog(params?.slug);
-  if(!blog) {
+  if (!blog) {
     notFound();
   }
   return (
@@ -49,7 +55,7 @@ export default SingleBlogPage;
 
 const myPortableTextComponent = {
   types: {
-    image: ({ value }: any) => (
+    image: ({ value }: { value: SanityImage }) => (
       <Image src={urlFor(value).url()} alt="" width={700} height={700} />
     ),
   },
